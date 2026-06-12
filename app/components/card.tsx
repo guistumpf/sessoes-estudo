@@ -2,6 +2,7 @@ import {
   Card,
   CardAction,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -18,6 +19,17 @@ import { sql } from "drizzle-orm";
 import { db } from "../db";
 import Add from "./Add";
 import Apagar from "./DeleteButton";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Ellipsis } from "lucide-react";
 
 export default async function Card1() {
   const nar = await db.execute(sql`SELECT * FROM "Sessoes"`);
@@ -42,23 +54,52 @@ export default async function Card1() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 max-w-3xl mx-auto px-4 w-1000">
         {sessoes.map(({ id, materia, created_at, anotacoes, tempo }) => (
           <Card key={id}>
-            <CardHeader>
-              <CardTitle>{materia}</CardTitle>
-              <CardAction>{formatarData(created_at)}</CardAction>
+            <CardHeader className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <CardTitle className="line-clamp-3">{materia}</CardTitle>
+                <CardDescription>{formatarData(created_at)}</CardDescription>
+              </div>
+              <CardAction className="flex-shrink-0">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                      <Ellipsis />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuGroup>
+                      <Apagar id={id}/>
+                      <DropdownMenuItem>Billing</DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </CardAction>
             </CardHeader>
             <CardContent>
-              <p>
-                {formatTempo(tempo)} <Apagar id={id} />
-              </p>
+              <p className="font-medium text-base">{formatTempo(tempo)}</p>
             </CardContent>
             <CardFooter>
               <Dialog>
-                <DialogTrigger>
-                  <h1 className="truncate max-w-[200px]">{anotacoes}</h1>
-                </DialogTrigger>
+                {anotacoes === "" ? (
+                  <p className="text-zinc-500">Sem anotações</p>
+                ) : (
+                  <>
+                    <div>
+                      <p className="text-xs font-medium">Anotações</p>
+                      <DialogTrigger>
+                        <h1 className="truncate max-w-[200px] mt-2">
+                          {anotacoes}
+                        </h1>
+                      </DialogTrigger>
+                    </div>
+                  </>
+                )}
+
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Anotações</DialogTitle>
+                    <DialogTitle>
+                      Anotações - {materia} {formatarData(created_at)}
+                    </DialogTitle>
                     <DialogDescription>{anotacoes}</DialogDescription>
                   </DialogHeader>
                 </DialogContent>

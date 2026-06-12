@@ -28,16 +28,16 @@ export default function Add() {
   const [materia, setMateria] = useState("");
   const [materiacustom, setcustom] = useState("");
   const [anotacoes, setanota] = useState("");
-  const [minutos, setmin] = useState(0);
-  const [horas, sethoras] = useState(0);
+  const [minutos, setmin] = useState<number | "">("");
+  const [horas, sethoras] = useState<number | "">("");
   const [aberto, setaberto] = useState(false);
   const router = useRouter();
 
   const finalMateria = materia === "Outro" ? materiacustom : materia;
   console.log(finalMateria);
 
-  const realhoras = horas * 60;
-  const legal = minutos + realhoras;
+  const realhoras = (horas as number) * 60;
+  const legal = (minutos as number) + realhoras;
 
   async function Enviar() {
     if (legal <= 0) {
@@ -55,6 +55,16 @@ export default function Add() {
       return;
     }
 
+    if ((minutos as number) > 59) {
+      alert("Valor inválido para minutos");
+      return;
+    }
+
+    if ((horas as number) > 23) {
+      alert("Valor inválido para horas");
+      return;
+    }
+
     await Adicionar(finalMateria, anotacoes.trim(), legal);
     alert("Sessão enviada!");
     setaberto(false);
@@ -62,6 +72,7 @@ export default function Add() {
     setcustom("");
     sethoras(0);
     setmin(0);
+    setanota("");
     router.refresh();
   }
 
@@ -85,7 +96,9 @@ export default function Add() {
             <DialogTitle>Registre uma nova sessão</DialogTitle>
             <DialogDescription>
               <div className="flex gap-1 mt-5">
-                <h1 className="text-black font-semibold">Qual matéria você estudou?</h1>
+                <h1 className="text-black font-semibold">
+                  Qual matéria você estudou?
+                </h1>
                 <span className="text-red-500">*</span>
               </div>
               <div className="mt-2 text-black">
@@ -146,11 +159,11 @@ export default function Add() {
               </div>
 
               <div className="flex gap-1 mt-7 ml-0.5">
-                <h1 className="text-black font-semibold">Tempo de estudo</h1><span className="text-red-500">*</span>
+                <h1 className="text-black font-semibold">Tempo de estudo</h1>
+                <span className="text-red-500">*</span>
               </div>
 
               <div className="flex gap-3 mt-2">
-               
                 <div className="flex flex-col">
                   <label className="text-sm ml-1 text-black mb-1">Horas</label>
                   <Input
@@ -159,11 +172,14 @@ export default function Add() {
                     placeholder="Max: 23h"
                     className="rounded-sm p-2"
                     value={horas}
-                    onChange={(e) => sethoras(e.target.valueAsNumber)}
+                    onChange={(e) =>
+                      sethoras(
+                        e.target.value === "" ? "" : Number(e.target.value),
+                      )
+                    }
                   />
                 </div>
 
-               
                 <div className="flex flex-col">
                   <div className="flex gap-1">
                     <label className="text-sm ml-1 text-black mb-1">
@@ -177,13 +193,19 @@ export default function Add() {
                     placeholder="Max: 59m"
                     className="rounded-sm p-2"
                     value={minutos}
-                    onChange={(e) => setmin(e.target.valueAsNumber)}
+                    onChange={(e) =>
+                      setmin(
+                        e.target.value === "" ? "" : Number(e.target.value),
+                      )
+                    }
                   />
                 </div>
               </div>
 
               <div className="mt-5 ml-1">
-                <h1 className="text-black ml text-md mb-2 font-medium">Anotações</h1>
+                <h1 className="text-black ml text-md mb-2 font-medium">
+                  Anotações
+                </h1>
                 <Textarea
                   placeholder="Conteúdo abordado, Anotações, Lembretes e etc..."
                   value={anotacoes}

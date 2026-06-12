@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
   DialogTrigger,
   DialogContent,
@@ -18,41 +19,82 @@ import {
   Select,
   SelectLabel,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { Adicionar } from "../actions";
+import { useRouter } from "next/navigation";
 
 export default function Add() {
-
   const [materia, setMateria] = useState("");
   const [materiacustom, setcustom] = useState("");
+  const [anotacoes, setanota] = useState("");
+  const [minutos, setmin] = useState(0);
+  const [horas, sethoras] = useState(0);
+  const [aberto, setaberto] = useState(false);
+  const router = useRouter();
 
   const finalMateria = materia === "Outro" ? materiacustom : materia;
   console.log(finalMateria);
 
+  const realhoras = horas * 60;
+  const legal = minutos + realhoras;
+
+  async function Enviar() {
+    if (legal <= 0) {
+      alert("Você não estudo nem 1 minuto? Tenebroso :(");
+      return;
+    } else if (legal > 1439) {
+      alert("Você estudou um dia inteiro?! Vai socializar cara");
+      return;
+    }
+
+    if (finalMateria === "") {
+      alert(
+        "Selecione ou escreva uma matéria! Como você vai saber o que estudou?",
+      );
+      return;
+    }
+
+    await Adicionar(finalMateria, anotacoes, legal);
+    alert("Sessão enviada!");
+    setaberto(false);
+    setMateria("");
+    setcustom("");
+    sethoras(0);
+    setmin(0);
+    router.refresh();
+  }
 
   return (
     <div>
       <Dialog
-       onOpenChange={(open) => {
-  if (!open) {
-    setMateria("");
-    setcustom("");
-  }
-}}
+        open={aberto}
+        onOpenChange={(newOpen) => {
+          setaberto(newOpen);
+          if (!newOpen) {
+            setMateria("");
+            setcustom("");
+            sethoras(0);
+            setmin(0);
+          }
+        }}
       >
-        
         <DialogTrigger>Add</DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Registre uma nova sessão</DialogTitle>
             <DialogDescription>
               <div className="flex gap-1 mt-5">
-                <h1 className="text-black">Qual matéria você estudou?</h1>
+                <h1 className="text-black font-semibold">Qual matéria você estudou?</h1>
                 <span className="text-red-500">*</span>
               </div>
               <div className="mt-2 text-black">
-                <Select value={materia} onValueChange={(value) => {
-    setMateria(value);
-  }}>
+                <Select
+                  value={materia}
+                  onValueChange={(value) => {
+                    setMateria(value);
+                  }}
+                >
                   <SelectTrigger className="w-[200px]">
                     <SelectValue placeholder="Selecione sua Matéria" />
                   </SelectTrigger>
@@ -97,25 +139,62 @@ export default function Add() {
                       placeholder="Escreve aqui!"
                       className="mt-2 w-[200px]"
                       value={materiacustom}
-                      onChange={(e) => setcustom(e.target.value) }
+                      onChange={(e) => setcustom(e.target.value)}
                     />
                   </div>
                 ) : null}
               </div>
 
-              <div>
-                <h1 className="text-black mt-6">O seu tempo de estudo</h1> 
+              <div className="flex gap-1 mt-7 ml-0.5">
+                <h1 className="text-black font-semibold">Tempo de estudo</h1><span className="text-red-500">*</span>
               </div>
-<div className="flex rounded-sm gap-3 mt-10">
-   
-   <Input
-    placeholder="Max: 24 hours"
-    type="number"
-    max={24}
-    />
-<Input/>
-</div>
 
+              <div className="flex gap-3 mt-2">
+                {/* Hours */}
+                <div className="flex flex-col">
+                  <label className="text-sm ml-1 text-black mb-1">Horas</label>
+                  <Input
+                    type="number"
+                    max={24}
+                    placeholder="Max: 23h"
+                    className="rounded-sm p-2"
+                    value={horas}
+                    onChange={(e) => sethoras(e.target.valueAsNumber)}
+                  />
+                </div>
+
+                {/* Minutes */}
+                <div className="flex flex-col">
+                  <div className="flex gap-1">
+                    <label className="text-sm ml-1 text-black mb-1">
+                      Minutos
+                    </label>{" "}
+                    <span className="text-red-500">*</span>
+                  </div>
+                  <Input
+                    type="number"
+                    max={59}
+                    placeholder="Max: 59m"
+                    className="rounded-sm p-2"
+                    value={minutos}
+                    onChange={(e) => setmin(e.target.valueAsNumber)}
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5 ml-1">
+                <h1 className="text-black ml text-md mb-2">Anotações</h1>
+                <Textarea
+                  placeholder="Conteúdo abordado, Anotações, Lembretes e etc..."
+                  value={anotacoes.trim()}
+                  onChange={(e) => setanota(e.target.value)}
+                />
+              </div>
+              <div className="flex justify-center">
+                <Button onClick={Enviar} className="w-full mt-4">
+                  Adicionar Sessão
+                </Button>
+              </div>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>

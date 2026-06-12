@@ -3,6 +3,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { sql } from "drizzle-orm";
 import { db } from "../db";
 import Add from "./Add";
+import { Deletar } from "../actions";
+import Apagar from "./DeleteButton";
 
 
 export default async function Card1() {
@@ -28,10 +30,11 @@ export default async function Card1() {
           <Card key={id}>
             <CardHeader>
               <CardTitle>{materia}</CardTitle>
-              <CardAction>{created_at}</CardAction>
+              <CardAction>{created_at}</CardAction> 
             </CardHeader>
             <CardContent>
-              <p>{tempo} minutos</p>
+              <p>{tempo} minutos <Apagar id={id}/>
+              </p>
             </CardContent>
             <CardFooter>
               <Dialog>

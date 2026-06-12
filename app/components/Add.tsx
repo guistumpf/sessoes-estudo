@@ -55,7 +55,7 @@ export default function Add() {
       return;
     }
 
-    await Adicionar(finalMateria, anotacoes, legal);
+    await Adicionar(finalMateria, anotacoes.trim(), legal);
     alert("Sessão enviada!");
     setaberto(false);
     setMateria("");
@@ -150,7 +150,7 @@ export default function Add() {
               </div>
 
               <div className="flex gap-3 mt-2">
-                {/* Hours */}
+               
                 <div className="flex flex-col">
                   <label className="text-sm ml-1 text-black mb-1">Horas</label>
                   <Input
@@ -163,7 +163,7 @@ export default function Add() {
                   />
                 </div>
 
-                {/* Minutes */}
+               
                 <div className="flex flex-col">
                   <div className="flex gap-1">
                     <label className="text-sm ml-1 text-black mb-1">
@@ -183,10 +183,10 @@ export default function Add() {
               </div>
 
               <div className="mt-5 ml-1">
-                <h1 className="text-black ml text-md mb-2">Anotações</h1>
+                <h1 className="text-black ml text-md mb-2 font-medium">Anotações</h1>
                 <Textarea
                   placeholder="Conteúdo abordado, Anotações, Lembretes e etc..."
-                  value={anotacoes.trim()}
+                  value={anotacoes}
                   onChange={(e) => setanota(e.target.value)}
                 />
               </div>

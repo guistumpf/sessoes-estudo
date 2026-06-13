@@ -23,6 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { Adicionar } from "../actions";
 import { useRouter } from "next/navigation";
+import { Plus } from "lucide-react";
 
 export default function Add() {
   const [materia, setMateria] = useState("");
@@ -90,7 +91,13 @@ export default function Add() {
           }
         }}
       >
-        <DialogTrigger>Add</DialogTrigger>
+          <div className="flex justify-center mt-1">
+        <DialogTrigger>
+            <Button>
+              Add <Plus />
+            </Button>
+        </DialogTrigger>
+          </div>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Registre uma nova sessão</DialogTitle>

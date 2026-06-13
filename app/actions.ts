@@ -11,3 +11,7 @@ export async function Deletar(id: number) {
     const del = await db.execute(sql`DELETE FROM "Sessoes" WHERE id=${id}`)
     
 }
+
+export async function Atualizar(id: number, materia: string, anotacoes: string, tempo: number) {
+    const upd = await db.execute(sql`UPDATE "Sessoes" SET materia=${materia}, anotacoes=${anotacoes}, tempo=${tempo} WHERE id=${id}`)
+}

@@ -10,10 +10,10 @@ export default function Apagar({ id }: { id: number }) {
   const router = useRouter();
 
   async function del() {
-    const confirmed = confirm(`Sério?`);
+    const confirmed = confirm(`Tem certeza? Vai perder a sessão e seus dados`);
     if (confirmed) {
       await Deletar(id);
-      alert("Tarefa Deletada!");
+      alert("Sessão Deletada!");
       router.refresh();
     }
   }

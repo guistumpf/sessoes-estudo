@@ -30,9 +30,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Ellipsis } from "lucide-react";
+import Edit from "./Edit";
 
 export default async function Card1() {
-  const nar = await db.execute(sql`SELECT * FROM "Sessoes"`);
+  const nar = await db.execute(sql`SELECT * FROM "Sessoes" ORDER BY id DESC`);
 
   const sessoes = nar as unknown as Array<{
     id: number;
@@ -68,8 +69,8 @@ export default async function Card1() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuGroup>
+                      <Edit id={id} materiaAtual={materia} anotacoesAtual={anotacoes} tempoAtual={tempo}/>
                       <Apagar id={id}/>
-                      <DropdownMenuItem>Billing</DropdownMenuItem>
                     </DropdownMenuGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>

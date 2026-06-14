@@ -6,6 +6,8 @@ import {
   uuid,
   date,
 } from "drizzle-orm/pg-core";
+import { user } from "@/auth-schema";
+export * from "@/auth-schema"
 
 // schema.ts
 export const Sessoes = pgTable("Sessoes", {
@@ -14,4 +16,7 @@ export const Sessoes = pgTable("Sessoes", {
   materia: text("materia").notNull(),
   anotacoes: text("anotacoes").notNull(),
   tempo: bigint("tempo", { mode: "number" }),
+   userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" })
 });

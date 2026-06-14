@@ -29,24 +29,26 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Moon, Sun } from "lucide-react";
 import Edit from "./components/Edit";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { authClient } from "@/lib/auth-client";
 import Logout from "./components/logout";
+import { ModeToggle } from "./components/theme";
 
 export default async function Card1() {
+  async function getUserId() {
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session) throw new Error("Não autenticado");
+    return session.user.id;
+  }
 
-async function getUserId() {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (!session) throw new Error("Não autenticado");
-  return session.user.id;
-}
+  const userId = await getUserId();
 
-const userId = getUserId()
-
-  const nar = await db.execute(sql`SELECT * FROM "Sessoes" WHERE user_id=${userId} ORDER BY id DESC`);
+  const nar = await db.execute(
+    sql`SELECT * FROM "Sessoes" WHERE user_id=${userId} ORDER BY id DESC`,
+  );
 
   const sessoes = nar as unknown as Array<{
     id: number;
@@ -58,6 +60,11 @@ const userId = getUserId()
 
   return (
     <>
+      <div className="fixed bottom-4 right-4 z-50">
+        <ModeToggle />
+      </div>
+
+      <Logout />
       <h1 className="text-3xl font-bold flex justify-center mt-4">
         Sessões de Estudo
       </h1>
@@ -70,7 +77,9 @@ const userId = getUserId()
           <Card key={id}>
             <CardHeader className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <CardTitle className="line-clamp-3">{materia}</CardTitle>
+                <CardTitle className="line-clamp-3 break-words">
+                  {materia}
+                </CardTitle>
                 <CardDescription>{formatarData(created_at)}</CardDescription>
               </div>
               <CardAction className="flex-shrink-0">
@@ -82,8 +91,13 @@ const userId = getUserId()
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuGroup>
-                      <Edit id={id} materiaAtual={materia} anotacoesAtual={anotacoes} tempoAtual={tempo}/>
-                      <Apagar id={id}/>
+                      <Edit
+                        id={id}
+                        materiaAtual={materia}
+                        anotacoesAtual={anotacoes}
+                        tempoAtual={tempo}
+                      />
+                      <Apagar id={id} />
                     </DropdownMenuGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -111,9 +125,8 @@ const userId = getUserId()
 
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>
-                      Anotações - {materia} {formatarData(created_at)}
-                    </DialogTitle>
+                    <DialogTitle>Anotações - {materia}</DialogTitle>
+                    <span>{formatarData(created_at)}</span>
                     <DialogDescription>{anotacoes}</DialogDescription>
                   </DialogHeader>
                 </DialogContent>
@@ -121,7 +134,6 @@ const userId = getUserId()
             </CardFooter>
           </Card>
         ))}
-        <Logout/>
       </div>
     </>
   );

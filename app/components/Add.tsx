@@ -45,7 +45,7 @@ export default function Add() {
       alert("Você não estudo nem 1 minuto? Tenebroso :(");
       return;
     } else if (legal > 1439) {
-      alert("Você estudou um dia inteiro?! Vai socializar cara");
+      alert("Você estudou um dia inteiro?! Sai de casa um pouco ;)");
       return;
     }
 
@@ -63,6 +63,11 @@ export default function Add() {
 
     if ((horas as number) > 23) {
       alert("Valor inválido para horas");
+      return;
+    }
+
+    if (materiacustom.length > 25) {
+      alert("Maxímo de 25 caracteres permitido, não tente quebrar a UI :(");
       return;
     }
 
@@ -94,7 +99,7 @@ export default function Add() {
           <div className="flex justify-center mt-1">
         <DialogTrigger>
             <Button>
-              Add <Plus />
+              Nova Sessão <Plus />
             </Button>
         </DialogTrigger>
           </div>
@@ -103,12 +108,12 @@ export default function Add() {
             <DialogTitle>Registre uma nova sessão</DialogTitle>
             <DialogDescription>
               <div className="flex gap-1 mt-5">
-                <h1 className="text-black font-semibold">
+                <h1 className="text-foreground font-semibold">
                   Qual matéria você estudou?
                 </h1>
                 <span className="text-red-500">*</span>
               </div>
-              <div className="mt-2 text-black">
+              <div className="mt-2 text-foreground">
                 <Select
                   value={materia}
                   onValueChange={(value) => {
@@ -152,12 +157,12 @@ export default function Add() {
                 {materia == "Outro" ? (
                   <div className="mt-4 mb-5">
                     <div className="flex gap-1">
-                      <h1>O que você estudou?</h1>
+                      <h1 className="text-foreground">O que você estudou?</h1>
                       <p className="text-red-500">*</p>
                     </div>
                     <Input
-                      placeholder="Escreve aqui!"
-                      className="mt-2 w-[200px]"
+                      placeholder="Máx: 25 caracteres"
+                      className="mt-2 w-[200px] text-foreground"
                       value={materiacustom}
                       onChange={(e) => setcustom(e.target.value)}
                     />
@@ -166,18 +171,18 @@ export default function Add() {
               </div>
 
               <div className="flex gap-1 mt-7 ml-0.5">
-                <h1 className="text-black font-semibold">Tempo de estudo</h1>
+                <h1 className="text-foreground font-semibold">Tempo de estudo</h1>
                 <span className="text-red-500">*</span>
               </div>
 
               <div className="flex gap-3 mt-2">
                 <div className="flex flex-col">
-                  <label className="text-sm ml-1 text-black mb-1">Horas</label>
+                  <label className="text-sm ml-1 text-foreground mb-1">Horas</label>
                   <Input
                     type="number"
                     max={24}
                     placeholder="Max: 23h"
-                    className="rounded-sm p-2"
+                    className="rounded-sm p-2 text-foreground"
                     value={horas}
                     onChange={(e) =>
                       sethoras(
@@ -189,7 +194,7 @@ export default function Add() {
 
                 <div className="flex flex-col">
                   <div className="flex gap-1">
-                    <label className="text-sm ml-1 text-black mb-1">
+                    <label className="text-sm ml-1 text-foreground mb-1">
                       Minutos
                     </label>{" "}
                     <span className="text-red-500">*</span>
@@ -198,7 +203,7 @@ export default function Add() {
                     type="number"
                     max={59}
                     placeholder="Max: 59m"
-                    className="rounded-sm p-2"
+                    className="rounded-sm p-2 text-foreground"
                     value={minutos}
                     onChange={(e) =>
                       setmin(
@@ -210,13 +215,14 @@ export default function Add() {
               </div>
 
               <div className="mt-5 ml-1">
-                <h1 className="text-black ml text-md mb-2 font-medium">
+                <h1 className="text-foreground ml text-md mb-2 font-medium">
                   Anotações
                 </h1>
                 <Textarea
                   placeholder="Conteúdo abordado, Anotações, Lembretes e etc..."
                   value={anotacoes}
                   onChange={(e) => setanota(e.target.value)}
+                  className="text-foreground"
                 />
               </div>
               <div className="flex justify-center">

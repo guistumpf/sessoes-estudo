@@ -63,6 +63,10 @@ export default function Edit({
       return;
     }
 
+ if (materia.length > 25) {
+      alert("Máximo de 25 caracteres permitido, não tente quebrar a UI :(");
+      return;
+    }
   
     
 

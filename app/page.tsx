@@ -64,7 +64,7 @@ export default async function Card1() {
         <ModeToggle />
       </div>
 
-      <Logout />
+      <Logout id={111110}/>
       <h1 className="text-3xl font-bold flex justify-center mt-4">
         Sessões de Estudo
       </h1>

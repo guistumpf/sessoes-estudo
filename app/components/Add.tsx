@@ -66,8 +66,14 @@ export default function Add() {
       return;
     }
 
-    if (materiacustom.length > 25) {
+    if (materiacustom.trim().length > 25) {
       alert("Maxímo de 25 caracteres permitido, não tente quebrar a UI :(");
+      return;
+    }
+
+ 
+     if (materiacustom.trim().length < 4) {
+      alert("Que matéria é essa que tem menos de 4 letras?");
       return;
     }
 

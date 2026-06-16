@@ -1,35 +1,47 @@
-
 "use client";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import { redirect, useRouter } from "next/navigation";
-import Image from 'next/image'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { user } from "@/auth-schema";
 import { Info, LogOut } from "lucide-react";
-import { logoutAction } from "../actions";
+import { Clear, logoutAction } from "../actions";
 // dentro do componente
 
-export default function Logout(){
-    
-    const router = useRouter();
-    const { data: session } = authClient.useSession();
-    
-    function logout(){
-        const confirmed = confirm("Tem certeza que deseja sair?")
-       
-        if(confirmed){
+export default function Logout({id}: {id: number}) {
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
 
-          logoutAction()
-          alert("Sessão encerrada!")
-          router.refresh()
-        }
-}
+  function logout() {
+    const confirmed = confirm("Tem certeza que deseja sair?");
 
-    return <>
-    
-    {session ?
- <div className="flex justify-end px-4 pt-4 pb-2 shrink-0">
+    if (confirmed) {
+      logoutAction();
+      alert("Sessão encerrada!");
+      router.refresh();
+    }
+  }
+
+  function Limpar() {
+    const confirmed = confirm("Tem certeza que deseja apagar tudo? É permane");
+
+    if (confirmed) {
+      Clear(id);
+      router.refresh();
+    }
+  }
+
+  return (
+    <>
+      {session ? (
+        <div className="flex justify-end px-4 pt-4 pb-2 shrink-0">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="rounded-sm">
@@ -44,16 +56,22 @@ export default function Logout(){
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="rounded">
-              <DropdownMenuSeparator />
+              
+              <DropdownMenuItem onClick={Limpar} className="cursor-pointer">
+                <LogOut color="red" />
+                <span className="text-red-500">Sair</span>
+              </DropdownMenuItem>
              
+              <DropdownMenuSeparator />
+
               <DropdownMenuItem onClick={logout} className="cursor-pointer">
-                 <LogOut color="red" />
+                <LogOut color="red" />
                 <span className="text-red-500">Sair</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        
-        : null}
+      ) : null}
     </>
+  );
 }

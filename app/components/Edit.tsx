@@ -68,6 +68,11 @@ export default function Edit({
       return;
     }
   
+     if (materia.length < 4) {
+      alert("Que matéria é essa que tem menos de 4 letras?");
+      return;
+    }
+  
     
 
     await Atualizar(id, materia.trim(), anotacoes.trim(), legal);
@@ -100,28 +105,28 @@ export default function Edit({
           <DialogTitle>Faça Edições a sua sessão!</DialogTitle>
           <DialogDescription>
             <div className="flex gap-1 mt-5">
-              <h1 className="text-black font-semibold">Matéria</h1>
+              <h1 className="text-foreground font-semibold">Matéria</h1>
               <span className="text-red-500">*</span>
             </div>
             <Input
-              className="mt-2 w-[200px]"
+              className="mt-2 w-[200px] text-foreground"
               value={materia}
               onChange={(e) => setMateria(e.target.value)}
             />
 
             <div className="flex gap-1 mt-7 ml-0.5">
-              <h1 className="text-black font-semibold">Tempo de estudo</h1>
+              <h1 className="text-foreground font-semibold">Tempo de estudo</h1>
               <span className="text-red-500">*</span>
             </div>
 
             <div className="flex gap-3 mt-2">
               <div className="flex flex-col">
-                <label className="text-sm ml-1 text-black mb-1">Horas</label>
+                <label className="text-sm ml-1 text-foreground mb-1">Horas</label>
                 <Input
                   type="number"
                   max={24}
                   placeholder="Max: 23h"
-                  className="rounded-sm p-2"
+                  className="rounded-sm p-2 text-foreground"
                   value={horas}
                   onChange={(e) =>
                     sethoras(
@@ -133,7 +138,7 @@ export default function Edit({
 
               <div className="flex flex-col">
                 <div className="flex gap-1">
-                  <label className="text-sm ml-1 text-black mb-1">
+                  <label className="text-sm ml-1 text-foreground mb-1">
                     Minutos
                   </label>
                   <span className="text-red-500">*</span>
@@ -142,7 +147,7 @@ export default function Edit({
                   type="number"
                   max={59}
                   placeholder="Max: 59m"
-                  className="rounded-sm p-2"
+                  className="rounded-sm p-2 text-foreground"
                   value={minutos}
                   onChange={(e) =>
                     setmin(e.target.value === "" ? "" : Number(e.target.value))
@@ -152,12 +157,13 @@ export default function Edit({
             </div>
 
             <div className="mt-5 ml-1">
-              <h1 className="text-black ml text-md mb-2 font-medium">
+              <h1 className="text-foreground ml text-md mb-2 font-medium">
                 Anotações
               </h1>
               <Textarea
                 value={anotacoes}
                 onChange={(e) => setanota(e.target.value)}
+                className="text-foreground"
               />
             </div>
             <div className="flex flex-row-reverse content-right gap-1">

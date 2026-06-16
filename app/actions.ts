@@ -6,6 +6,7 @@ import { sql } from "drizzle-orm";
 import { db } from "./db";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { get } from "http";
 
 async function getUserId() {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -42,6 +43,14 @@ export async function Atualizar(
     sql`UPDATE "Sessoes" SET materia=${materia}, anotacoes=${anotacoes}, tempo=${tempo} WHERE id=${id} AND user_id=${userId}`,
   );
 }
+
+export async function Clear(id: number) {
+const userId = await getUserId()
+const limpar = await db.execute(sql`DELETE FROM "Sessoes" WHERE user_id=${userId}`)
+
+}
+
+
 
 export async function logoutAction() {
   const session = await auth.api.getSession({

@@ -60,7 +60,7 @@ export default async function Card1() {
 
   return (
     <>
- <div className="flex flex-col h-[100dvh] overflow-hidden w-full relative">
+ <div className="flex flex-col min-h-[100dvh] overflow-hidden w-full relative">
   <div className="fixed bottom-4 right-4 z-50">
     <ModeToggle />
   </div>

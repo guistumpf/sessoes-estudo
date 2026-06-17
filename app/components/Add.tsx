@@ -78,9 +78,9 @@ export default function Add() {
       return;
     }
 
-    await Adicionar(finalMateria, anotacoes.trim(), legal);
-    alert("Sessão enviada!");
     setaberto(false);
+    alert("Sessão enviada!");
+    await Adicionar(finalMateria, anotacoes.trim(), legal);
     setMateria("");
     setcustom("");
     sethoras(0);

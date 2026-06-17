@@ -34,14 +34,13 @@ export default function Logout({ id }: { id: number }) {
   const router = useRouter();
   const { data: session } = authClient.useSession();
 
-  function logout() {
+  async function logout() {
     const confirmed = confirm("Tem certeza que deseja sair?");
 
     if (confirmed) {
-      logoutAction();
+     await logoutAction();
       alert("Sessão encerrada!");
-     router.refresh()
-      redirect("/login");
+    router.push('/login'); 
     }
   }
 

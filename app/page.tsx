@@ -60,19 +60,33 @@ export default async function Card1() {
 
   return (
     <>
-      <div className="flex flex-col h-[100dvh] overflow-hidden w-full">
-        <div className="fixed bottom-4 right-4 z-50">
-          <ModeToggle />
-        </div>
+ <div className="flex flex-col h-[100dvh] overflow-hidden w-full relative">
+  <div className="fixed bottom-4 right-4 z-50">
+    <ModeToggle />
+  </div>
 
-        <Logout id={111110} />
-        <h1 className="text-3xl font-bold flex justify-center mt-4">
-          Sessões de Estudo
-        </h1>
-        <h1 className="flex justify-center mt-1 text-[15px] text-zinc-400 text-center">
-          O que você estudou hoje?
-        </h1>
-        <Add />
+  {/* Logout fixo no topo direito só no desktop */}
+  <div className="hidden md:block fixed top-1 right-1">
+    <Logout id={111110} />
+  </div>
+
+  {/* Logout no mobile (fluxo normal) */}
+  <div className="md:hidden">
+    <Logout id={111110} />
+  </div>
+
+  {/* Header centralizado */}
+  <div className="flex flex-col items-center mt-4 w-full">
+    <h1 className="text-3xl font-bold text-center">
+      Sessões de Estudo
+    </h1>
+    <h1 className="mt-1 text-[15px] text-zinc-400 text-center">
+      O que você estudou hoje?
+    </h1>
+    <Add />
+  </div>
+
+   
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 max-w-3xl mx-auto px-4 w-1000">
           {sessoes.map(({ id, materia, created_at, anotacoes, tempo }) => (
             <Card key={id}>

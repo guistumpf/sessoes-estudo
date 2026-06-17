@@ -23,6 +23,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import { IoLogoVercel } from "react-icons/io5";
+import { RiSupabaseFill } from "react-icons/ri";
+import { SiNextdotjs, SiShadcnui, SiLucide, SiTailwindcss, SiBetterauth } from "react-icons/si";
+import { TbSourceCode } from "react-icons/tb";
 // dentro do componente
 
 export default function Logout({ id }: { id: number }) {
@@ -41,7 +45,7 @@ export default function Logout({ id }: { id: number }) {
   }
 
   function Limpar() {
-    const confirmed = confirm("Tem certeza que deseja apagar tudo? É permane");
+    const confirmed = confirm("Tem certeza que deseja apagar tudo? É permanente hein!");
 
     if (confirmed) {
       Clear(id);
@@ -82,8 +86,11 @@ return (
                 }}
                 className="cursor-pointer"
               >
-                <span>Info</span>         
+                <div className="flex gap-2 items-center">
+                  <Info/> <span>Informações</span>         
+                </div>
               </DropdownMenuItem>
+
 
               <DropdownMenuItem onClick={Limpar} className="cursor-pointer">
                 <TriangleAlert className="text-amber-500 dark:text-yellow-400" />
@@ -101,12 +108,45 @@ return (
 
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
-              <DialogDescription>
-                This action cannot be undone. This will permanently
-                delete your account and remove your data from our
-                servers.
-              </DialogDescription>
+              <DialogTitle>Mais um!</DialogTitle>
+                 <DialogDescription asChild>
+              <div className="text-sm text-muted-foreground">
+                <p className="">Mais um crud! :) </p>
+                
+
+                <div className="mt-3">
+                 Banco de dados fornecido pelo Supabase e Autenticação já no next.js, fornecida pelo Better Auth.
+                </div>
+                <div className="mt-1 mb-1 text-[10px]">
+                *UI feita com Shadcn, Tailwind, React
+                  Icons e Lucide
+                </div>
+                <a
+                  href="https://github.com/guistumpf/sessoes-estudo"
+                  className="w-fit block"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <TbSourceCode
+                    className="text-3xl mt-2 mb-2 cursor-pointer"
+                    title="Código Fonte"
+                  />
+                </a>
+                <p className="mb-2 mt-2 font-bold">Tecnologias Utilizadas:</p>
+                <div className="flex justify-center gap-3">
+                  <FaGithub
+                    className="text-2xl"
+                    title="Github / Github Desktop"
+                  />
+                  <SiNextdotjs className="text-2xl" title="Next.Js" />
+                  <RiSupabaseFill className="text-2xl" title="Supabase" />
+                  <SiShadcnui className="text-2xl" title="Shadcn/ui" />
+                  <IoLogoVercel className="text-2xl" title="Vercel" />
+                  <SiLucide className="text-2xl" title="Lucide Icons" />
+                  <SiTailwindcss className="text-2xl" title="Tailwind Css" />
+                  <SiBetterauth  className="text-2xl" title="Better Auth"/>
+                </div>
+              </div>
+            </DialogDescription>
             </DialogHeader>
           </DialogContent>
 

@@ -13,7 +13,7 @@ export default function LoginPage() {
     <ModeToggle />
   </div>
 
-  <div className="h-screen w-full flex flex-col bg-background overflow-x-hidden">
+  <div className="h-screen w-full flex flex-col bg-backgr ound overflow-x-hidden">
     
     {/* TOPO */}
     <div className="pt-4 text-center px-4">

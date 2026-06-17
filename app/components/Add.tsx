@@ -67,6 +67,16 @@ export default function Add() {
       return;
     }
 
+if ((horas as number) < 0) {
+      alert("Valor inválido para horas");
+      return;
+    }
+
+if ((minutos as number) < 0) {
+      alert("Valor inválido para horas");
+      return;
+    }
+
     if (materiacustom.trim().length > 25) {
       alert("Maxímo de 25 caracteres permitido, não tente quebrar a UI :(");
       return;

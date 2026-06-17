@@ -8,7 +8,10 @@ import { ModeToggle } from "../components/theme";
 
 export default function LoginPage() {
   return (
-   <>
+ 
+ <>
+ <div className="min-h-[100dvh]">
+
   <div className="fixed bottom-4 right-4 z-50">
     <ModeToggle />
   </div>
@@ -63,6 +66,7 @@ export default function LoginPage() {
       </a>
     </div>
   </div>
+ </div>
 </>
   );
 }

@@ -60,80 +60,82 @@ export default async function Card1() {
 
   return (
     <>
-      <div className="fixed bottom-4 right-4 z-50">
-        <ModeToggle />
-      </div>
+      <div className="flex flex-col h-[100dvh] overflow-hidden w-full">
+        <div className="fixed bottom-4 right-4 z-50">
+          <ModeToggle />
+        </div>
 
-      <Logout id={111110}/>
-      <h1 className="text-3xl font-bold flex justify-center mt-4">
-        Sessões de Estudo
-      </h1>
-      <h1 className="flex justify-center mt-1 text-[15px] text-zinc-400 text-center">
-        O que você estudou hoje?
-      </h1>
-      <Add />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 max-w-3xl mx-auto px-4 w-1000">
-        {sessoes.map(({ id, materia, created_at, anotacoes, tempo }) => (
-          <Card key={id}>
-            <CardHeader className="flex items-start justify-between gap-2">
-              <div className="min-w-0">
-                <CardTitle className="line-clamp-3 break-words">
-                  {materia}
-                </CardTitle>
-                <CardDescription>{formatarData(created_at)}</CardDescription>
-              </div>
-              <CardAction className="flex-shrink-0">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline">
-                      <Ellipsis />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuGroup>
-                      <Edit
-                        id={id}
-                        materiaAtual={materia}
-                        anotacoesAtual={anotacoes}
-                        tempoAtual={tempo}
-                      />
-                      <Apagar id={id} />
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </CardAction>
-            </CardHeader>
-            <CardContent>
-              <p className="font-medium text-base">{formatTempo(tempo)}</p>
-            </CardContent>
-            <CardFooter>
-              <Dialog>
-                {anotacoes === "" ? (
-                  <p className="text-zinc-500">Sem anotações</p>
-                ) : (
-                  <>
-                    <div>
-                      <p className="text-xs font-medium">Anotações</p>
-                      <DialogTrigger>
-                        <h1 className="truncate max-w-[200px] mt-2">
-                          {anotacoes}
-                        </h1>
-                      </DialogTrigger>
-                    </div>
-                  </>
-                )}
+        <Logout id={111110} />
+        <h1 className="text-3xl font-bold flex justify-center mt-4">
+          Sessões de Estudo
+        </h1>
+        <h1 className="flex justify-center mt-1 text-[15px] text-zinc-400 text-center">
+          O que você estudou hoje?
+        </h1>
+        <Add />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 max-w-3xl mx-auto px-4 w-1000">
+          {sessoes.map(({ id, materia, created_at, anotacoes, tempo }) => (
+            <Card key={id}>
+              <CardHeader className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <CardTitle className="line-clamp-3 break-words">
+                    {materia}
+                  </CardTitle>
+                  <CardDescription>{formatarData(created_at)}</CardDescription>
+                </div>
+                <CardAction className="flex-shrink-0">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline">
+                        <Ellipsis />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuGroup>
+                        <Edit
+                          id={id}
+                          materiaAtual={materia}
+                          anotacoesAtual={anotacoes}
+                          tempoAtual={tempo}
+                        />
+                        <Apagar id={id} />
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </CardAction>
+              </CardHeader>
+              <CardContent>
+                <p className="font-medium text-base">{formatTempo(tempo)}</p>
+              </CardContent>
+              <CardFooter>
+                <Dialog>
+                  {anotacoes === "" ? (
+                    <p className="text-zinc-500">Sem anotações</p>
+                  ) : (
+                    <>
+                      <div>
+                        <p className="text-xs font-medium">Anotações</p>
+                        <DialogTrigger>
+                          <h1 className="truncate max-w-[200px] mt-2">
+                            {anotacoes}
+                          </h1>
+                        </DialogTrigger>
+                      </div>
+                    </>
+                  )}
 
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Anotações - {materia}</DialogTitle>
-                    <span>{formatarData(created_at)}</span>
-                    <DialogDescription>{anotacoes}</DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
-            </CardFooter>
-          </Card>
-        ))}
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Anotações - {materia}</DialogTitle>
+                      <span>{formatarData(created_at)}</span>
+                      <DialogDescription>{anotacoes}</DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
       </div>
     </>
   );

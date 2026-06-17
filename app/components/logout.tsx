@@ -11,11 +11,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { user } from "@/auth-schema";
-import { Info, LogOut } from "lucide-react";
+import { Info, LogOut, TriangleAlert } from "lucide-react";
 import { Clear, logoutAction } from "../actions";
+import { FaGithub } from "react-icons/fa";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
 // dentro do componente
 
-export default function Logout({id}: {id: number}) {
+export default function Logout({ id }: { id: number }) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const router = useRouter();
   const { data: session } = authClient.useSession();
 
@@ -34,18 +45,23 @@ export default function Logout({id}: {id: number}) {
 
     if (confirmed) {
       Clear(id);
+      alert("Sessões Apagadas!");
       router.refresh();
     }
   }
 
-  return (
-    <>
-      {session ? (
-        <div className="flex justify-end px-4 pt-4 pb-2 shrink-0">
+
+return (
+  <>
+    {session ? (
+      <div className="flex justify-end px-4 pt-4 pb-2 shrink-0">
+        {/* Envolvemos a estrutura no Dialog controlado */}
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="rounded-sm">
-                <span className="font-bold">{session.user.name}</span>
+              <Button variant="outline" className="rounded-sm text-sm">
+                <span className="font-bold ">{session.user.name}</span>
                 <Image
                   src={session.user.image as string}
                   width={25}
@@ -55,13 +71,25 @@ export default function Logout({id}: {id: number}) {
                 />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="rounded">
+            
+            <DropdownMenuContent align="end" className="rounded text-xs">
               
-              <DropdownMenuItem onClick={Limpar} className="cursor-pointer">
-                <LogOut color="red" />
-                <span className="text-red-500">Sair</span>
+              {/* Evento preventDefault evita que o Dropdown intercepte o clique e feche tudo */}
+              <DropdownMenuItem 
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setIsDialogOpen(true);
+                }}
+                className="cursor-pointer"
+              >
+                <span>Info</span>         
               </DropdownMenuItem>
-             
+
+              <DropdownMenuItem onClick={Limpar} className="cursor-pointer">
+                <TriangleAlert className="text-amber-500 dark:text-yellow-400" />
+                <span className="text-yellow-500">Limpar Sessões</span>
+              </DropdownMenuItem>
+
               <DropdownMenuSeparator />
 
               <DropdownMenuItem onClick={logout} className="cursor-pointer">
@@ -70,8 +98,22 @@ export default function Logout({id}: {id: number}) {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-      ) : null}
-    </>
-  );
+
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently
+                delete your account and remove your data from our
+                servers.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+
+        </Dialog>
+      </div>
+    ) : null}
+  </>
+);
+
 }

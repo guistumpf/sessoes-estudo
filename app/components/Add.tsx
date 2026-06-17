@@ -72,7 +72,7 @@ export default function Add() {
     }
 
  
-     if (materiacustom.trim().length < 4) {
+     if (finalMateria.trim().length < 4) {
       alert("Que matéria é essa que tem menos de 4 letras?");
       return;
     }

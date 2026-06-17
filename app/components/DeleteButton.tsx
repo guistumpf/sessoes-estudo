@@ -19,9 +19,9 @@ export default function Apagar({ id }: { id: number }) {
   }
 
   return (
-    <DropdownMenuItem onClick={del} className="cursor-pointer focus:text-red-600 focus:bg-red-50">
-      <h1 className="text-red-600 hover:text-red-800">Apagar Sessão</h1>
-      <Trash className="h-4 w-4 text-red-600" />
-    </DropdownMenuItem>
+    <DropdownMenuItem onClick={del} className="group cursor-pointer hover:bg-red-500">
+  <h1 className="text-red-600 group-hover:text-white">Apagar Sessão</h1>
+  <Trash className="h-4 w-4 text-red-600 group-hover:text-white" />
+</DropdownMenuItem>
   );
 }

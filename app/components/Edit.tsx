@@ -24,7 +24,7 @@ interface EditProps {
 }
 
 
-
+export const dynamic = "force-dynamic";
 export default function Edit({
   id,
   materiaAtual,

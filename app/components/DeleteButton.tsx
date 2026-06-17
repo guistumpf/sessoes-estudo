@@ -5,6 +5,7 @@ import { Deletar } from "../actions";
 import { Icon, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+export const dynamic = "force-dynamic";
 
 export default function Apagar({ id }: { id: number }) {
   const router = useRouter();

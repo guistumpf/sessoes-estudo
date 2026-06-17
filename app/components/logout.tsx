@@ -28,7 +28,7 @@ import { RiSupabaseFill } from "react-icons/ri";
 import { SiNextdotjs, SiShadcnui, SiLucide, SiTailwindcss, SiBetterauth } from "react-icons/si";
 import { TbSourceCode } from "react-icons/tb";
 // dentro do componente
-
+export const dynamic = "force-dynamic";
 export default function Logout({ id }: { id: number }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const router = useRouter();

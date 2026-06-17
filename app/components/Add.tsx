@@ -24,6 +24,7 @@ import { useState } from "react";
 import { Adicionar } from "../actions";
 import { useRouter } from "next/navigation";
 import { Plus } from "lucide-react";
+export const dynamic = "force-dynamic";
 
 export default function Add() {
   const [materia, setMateria] = useState("");

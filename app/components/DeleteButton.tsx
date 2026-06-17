@@ -11,7 +11,7 @@ export default function Apagar({ id }: { id: number }) {
   const router = useRouter();
 
   async function del() {
-    const confirmed = confirm(`Tem certeza? Vai perder a sessão e seus dados`);
+    const confirmed = confirm(`Tem certeza? Vai perder a sessão e os dados dela`);
     if (confirmed) {
       await Deletar(id);
       alert("Sessão Deletada!");

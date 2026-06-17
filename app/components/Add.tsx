@@ -201,7 +201,11 @@ if ((minutos as number) < 0) {
                     placeholder="Max: 23h"
                     className="rounded-sm p-2 text-foreground"
                     value={horas}
-                    onChange={(e) =>
+onKeyDown={(e) => {
+if (['.', ',', 'e', 'E', '+', '-'].includes(e.key)) {
+      e.preventDefault();
+    }
+  }}                onChange={(e) =>
                       sethoras(
                         e.target.value === "" ? "" : Number(e.target.value),
                       )
@@ -222,6 +226,11 @@ if ((minutos as number) < 0) {
                     placeholder="Max: 59m"
                     className="rounded-sm p-2 text-foreground"
                     value={minutos}
+onKeyDown={(e) => {
+if (['.', ',', 'e', 'E', '+', '-'].includes(e.key)) {
+      e.preventDefault();
+    }
+  }}
                     onChange={(e) =>
                       setmin(
                         e.target.value === "" ? "" : Number(e.target.value),

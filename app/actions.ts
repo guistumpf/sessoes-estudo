@@ -101,5 +101,4 @@ export async function logoutAction() {
     headers: await headers(),
   });
 
-  redirect("/login");
 }

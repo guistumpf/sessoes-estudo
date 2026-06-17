@@ -40,7 +40,8 @@ export default function Logout({ id }: { id: number }) {
     if (confirmed) {
       logoutAction();
       alert("Sessão encerrada!");
-      router.refresh();
+     router.refresh()
+      redirect("/login");
     }
   }
 

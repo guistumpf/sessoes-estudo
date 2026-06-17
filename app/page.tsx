@@ -23,17 +23,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Ellipsis, Moon, Sun } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import Edit from "./components/Edit";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { authClient } from "@/lib/auth-client";
 import Logout from "./components/logout";
 import { ModeToggle } from "./components/theme";
 
@@ -60,34 +56,34 @@ export default async function Card1() {
 
   return (
     <>
- <div className="flex flex-col min-h-[100dvh] overflow-hidden w-full relative">
-  <div className="fixed bottom-4 right-4 z-50">
-    <ModeToggle />
-  </div>
+      <div className="flex flex-col min-h-[100dvh] overflow-x-hidden w-full relative">
+        <div className="fixed bottom-4 right-4 z-50">
+          <ModeToggle />
+        </div>
 
-  {/* Logout fixo no topo direito só no desktop */}
-  <div className="hidden md:block fixed top-1 right-1">
-    <Logout id={111110} />
-  </div>
+        {/* Logout fixo no topo direito só no desktop */}
+        <div className="hidden md:block fixed top-1 right-1">
+          <Logout id={111110} />
+        </div>
 
-  {/* Logout no mobile (fluxo normal) */}
-  <div className="md:hidden">
-    <Logout id={111110} />
-  </div>
+        {/* Logout no mobile alinhado à direita */}
+        <div className="md:hidden flex justify-end px-4 pt-2">
+          <Logout id={111110} />
+        </div>
 
-  {/* Header centralizado */}
-  <div className="flex flex-col items-center mt-4 w-full">
-    <h1 className="text-3xl font-bold text-center">
-      Sessões de Estudo
-    </h1>
-    <h1 className="mt-1 text-[15px] text-zinc-400 text-center">
-      O que você estudou hoje?
-    </h1>
-    <Add />
-  </div>
+        {/* Header centralizado */}
+        <div className="flex flex-col items-center mt-4 w-full">
+          <h1 className="text-3xl font-bold text-center">
+            Sessões de Estudo
+          </h1>
+          <h1 className="mt-1 text-[15px] text-zinc-400 text-center">
+            O que você estudou hoje?
+          </h1>
+          <Add />
+        </div>
 
-   
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 max-w-3xl mx-auto px-4 w-1000">
+        {/* Grid — w-full no lugar do inválido w-1000 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 max-w-3xl mx-auto px-4 w-full">
           {sessoes.map(({ id, materia, created_at, anotacoes, tempo }) => (
             <Card key={id}>
               <CardHeader className="flex items-start justify-between gap-2">
@@ -126,16 +122,14 @@ export default async function Card1() {
                   {anotacoes === "" ? (
                     <p className="text-zinc-500">Sem anotações</p>
                   ) : (
-                    <>
-                      <div>
-                        <p className="text-xs font-medium">Anotações</p>
-                        <DialogTrigger>
-                          <h1 className="truncate max-w-[200px] mt-2">
-                            {anotacoes}
-                          </h1>
-                        </DialogTrigger>
-                      </div>
-                    </>
+                    <div>
+                      <p className="text-xs font-medium">Anotações</p>
+                      <DialogTrigger>
+                        <h1 className="truncate max-w-[200px] mt-2">
+                          {anotacoes}
+                        </h1>
+                      </DialogTrigger>
+                    </div>
                   )}
 
                   <DialogContent>

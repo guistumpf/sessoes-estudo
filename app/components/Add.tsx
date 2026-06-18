@@ -148,6 +148,12 @@ if ((minutos as number) < 0) {
                       <SelectItem value="Química">Química</SelectItem>
                     </SelectGroup>
                     <SelectGroup>
+                      <SelectLabel>Subclasses Matématica</SelectLabel>
+                      <SelectItem value="Aritmética">Aritmética</SelectItem>
+                      <SelectItem value="Álgebra">Álgebra</SelectItem>
+                      <SelectItem value="Geometria">Geometria</SelectItem>
+                    </SelectGroup>
+                    <SelectGroup>
                       <SelectLabel>Ciências Humanas</SelectLabel>
                       <SelectItem value="Artes">Artes</SelectItem>
                       <SelectItem value="História">História</SelectItem>

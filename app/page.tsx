@@ -44,7 +44,7 @@ export default async function Card1() {
 
   const nar = await db.execute(
     sql`SELECT * FROM "Sessoes" WHERE user_id=${userId} ORDER BY id DESC`,
-  );
+  ); 
 
   const sessoes = nar as unknown as Array<{
     id: number;
